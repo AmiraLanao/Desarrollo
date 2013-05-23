@@ -1,0 +1,43 @@
+#apDiv1 {
+	position: absolute;
+	left: 13px;
+	top: 7px;
+	width: 1102px;
+	height: 84px;
+	z-index: 1;
+}
+body {
+	background-image: url(escuelaUTP/images/back.jpg);
+}
+#apDiv2 {
+	position: absolute;
+	left: 218px;
+	top: 104px;
+	width: 659px;
+	height: 32px;
+	z-index: 2;
+}
+#apDiv3 {
+	position: absolute;
+	left: 341px;
+	top: 213px;
+	width: 214px;
+	height: 137px;
+	z-index: 3;
+}
+#apDiv4 {
+	position: absolute;
+	left: 35px;
+	top: 379px;
+	width: 193px;
+	height: 102px;
+	z-index: 4;
+}
+#apDiv5 {
+	position: absolute;
+	left: 519px;
+	top: 301px;
+	width: 217px;
+	height: 158px;
+	z-index: 5;
+}
