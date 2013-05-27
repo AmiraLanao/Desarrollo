@@ -3,68 +3,54 @@ package univer.bean;
 import univer.util.*;
 
 public class Alumno extends Bean {
+	private String Codigo;
+	private String Nombres;
+	private String Apellidos;
+	private String FechaNac;
+	private String Sexo;
 
-	private static final long serialVersionUID = 1L;
-	
-	private String chrAlumCodigo;
-	private String chrAlumContras;
-	private String vchAlumNombres;
-	private String vchAlumApellidos;
-	private String vchAlumFaculta;
-	private String chrPensCodigo;
+    public Alumno() {
+            super();
+    }
 
-	public Alumno() {
-		super();
-	}
 
-	public String getChrAlumCodigo() {
-		return chrAlumCodigo;
-	}
+    public String getCodigo() {
+        return Codigo;
+    }
 
-	public void setChrAlumCodigo(String chrAlumCodigo) {
-		this.chrAlumCodigo = chrAlumCodigo;
-	}
+    public void setCodigo(String Codigo) {
+        this.Codigo = Codigo;
+    }
 
-	public String getChrAlumContras() {
-		return chrAlumContras;
-	}
+    public String getNombres() {
+        return Nombres;
+    }
 
-	public void setChrAlumContras(String chrAlumContras) {
-		this.chrAlumContras = chrAlumContras;
-	}
+    public void setNombres(String Nombres) {
+        this.Nombres = Nombres;
+    }
 
-	public String getVchAlumNombres() {
-		return vchAlumNombres;
-	}
+    public String getApellidos() {
+        return Apellidos;
+    }
 
-	public void setVchAlumNombres(String vchAlumNombres) {
-		this.vchAlumNombres = vchAlumNombres;
-	}
+    public void setApellidos(String Apellidos) {
+        this.Apellidos = Apellidos;
+    }
 
-	public String getVchAlumApellidos() {
-		return vchAlumApellidos;
-	}
+    public String getFechaNac() {
+        return FechaNac;
+    }
 
-	public void setVchAlumApellidos(String vchAlumApellidos) {
-		this.vchAlumApellidos = vchAlumApellidos;
-	}
+    public void setFechaNac(String FechaNac) {
+        this.FechaNac = FechaNac;
+    }
 
-	public String getVchAlumFaculta() {
-		return vchAlumFaculta;
-	}
+    public String getSexo() {
+        return Sexo;
+    }
 
-	public void setVchAlumFaculta(String vchAlumFaculta) {
-		this.vchAlumFaculta = vchAlumFaculta;
-	}
-
-	public String getChrPensCodigo() {
-		return chrPensCodigo;
-	}
-
-	public void setChrPensCodigo(String chrPensCodigo) {
-		this.chrPensCodigo = chrPensCodigo;
-	}
-
-	
-	
+    public void setSexo(String Sexo) {
+        this.Sexo = Sexo;
+    }
 }

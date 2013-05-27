@@ -12,7 +12,7 @@ import java.io.*;
  public class DBConn{
 	 
 		private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		private static String url = "jdbc:sqlserver://localhost:1433;databaseName=escuelautp";
+		private static String url = "jdbc:sqlserver://localhost:1433;databaseName=univerUTP";
 		private static String usuario = "java";
 		private static String password = "java";
 	

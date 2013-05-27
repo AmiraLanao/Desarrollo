@@ -1,7 +1,11 @@
 
 package univer.dao;
 
+
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import univer.bean.*;
 import univer.util.*;
@@ -13,6 +17,11 @@ public AlumnoDAO() {
 }
 
 
+DateFormat dateFormat;
+
+
+
+
 //Para obtener una conexion.
 private Connection getConnection(){
 	
@@ -21,59 +30,11 @@ private Connection getConnection(){
 }
 
 
-public void CambiaPassword(String chrAlumCodigo, String chrAlumContras)throws SQLException {
-
-	Connection conn=getConnection();	
-	Statement stm=conn.createStatement();
-	String sql="";
-	
-	sql="UPDATE Alumno SET chrAlumContras='";
-	sql+=chrAlumContras+"' WHERE chrAlumCodigo='"+chrAlumCodigo+"'";
-	
-	stm.executeUpdate(sql);
-
-	stm.close();
-	conn.close();	
-	
-}
-
-
-public Alumno validarLogin(String chrAlumCodigo, String chrAlumContras)throws SQLException {
-
-	Alumno objEntidad=null;
-
-	String sql="";
-	
-	Connection conn=getConnection();
-	
-	Statement stm=conn.createStatement();
-	
-	sql="SELECT * FROM Alumno WHERE chrAlumCodigo='"+chrAlumCodigo+"' AND chrAlumContras='"+chrAlumContras+"'";
-	
-	ResultSet rst=stm.executeQuery(sql);
-
-	while(rst.next()){
-			
-		objEntidad=new Alumno();
-		
-		objEntidad.setChrAlumCodigo(rst.getString(1));
-		objEntidad.setChrAlumContras(rst.getString(2));
-		objEntidad.setVchAlumNombres(rst.getString(3));
-		objEntidad.setVchAlumApellidos(rst.getString(4));
-		objEntidad.setVchAlumFaculta(rst.getString(5));
-		objEntidad.setChrPensCodigo(rst.getString(6));
-	}
-
-	rst.close();
-	stm.close();
-	conn.close();
-		
-	return objEntidad;	
-}
-
-
 public Lista obtenerAlumnos() throws Exception {
 
+	//Dar Formato a la fecha
+	dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	
 	Alumno objEntidad=null;
 
 	Lista objLista=new Lista(); 
@@ -87,17 +48,18 @@ public Lista obtenerAlumnos() throws Exception {
 	sql="SELECT * FROM Alumno";
 	
 	ResultSet rst=stm.executeQuery(sql);
-
+	
+	
+	
 	while(rst.next()){
 		
 		objEntidad=new Alumno();
 		
-		objEntidad.setChrAlumCodigo(rst.getString(1));
-		objEntidad.setChrAlumContras(rst.getString(2));
-		objEntidad.setVchAlumNombres(rst.getString(3));
-		objEntidad.setVchAlumApellidos(rst.getString(4));
-		objEntidad.setVchAlumFaculta(rst.getString(5));
-		objEntidad.setChrPensCodigo(rst.getString(6));
+		objEntidad.setCodigo(rst.getString(1));
+		objEntidad.setNombres(rst.getString(2));
+		objEntidad.setApellidos(rst.getString(3));
+		objEntidad.setFechaNac(dateFormat.format(rst.getDate(4)));
+		objEntidad.setSexo(rst.getString(5));
 		
 		objLista.setElemento(objEntidad);				
 	}
@@ -111,8 +73,11 @@ public Lista obtenerAlumnos() throws Exception {
 }
 
 
-public Alumno obtenerAlumnoPK(String chrAlumCodigo) throws Exception {
+public Alumno obtenerAlumnoPK(String strCodigo) throws Exception {
 
+	//Dar Formato a la fecha
+	dateFormat = new SimpleDateFormat("dd-MM-yyyy");	
+	
 	Alumno objEntidad=null;
 
 	String sql="";
@@ -121,7 +86,7 @@ public Alumno obtenerAlumnoPK(String chrAlumCodigo) throws Exception {
 	
 	Statement stm=conn.createStatement();
 	
-	sql="SELECT * FROM Alumno WHERE chrAlumCodigo='"+chrAlumCodigo+"'";
+	sql="SELECT * FROM Alumno WHERE chrAluCodigo='"+strCodigo+"'";
 	
 	ResultSet rst=stm.executeQuery(sql);
 
@@ -129,12 +94,11 @@ public Alumno obtenerAlumnoPK(String chrAlumCodigo) throws Exception {
 		
 		objEntidad=new Alumno();
 		
-		objEntidad.setChrAlumCodigo(rst.getString(1));
-		objEntidad.setChrAlumContras(rst.getString(2));
-		objEntidad.setVchAlumNombres(rst.getString(3));
-		objEntidad.setVchAlumApellidos(rst.getString(4));
-		objEntidad.setVchAlumFaculta(rst.getString(5));
-		objEntidad.setChrPensCodigo(rst.getString(6));
+		objEntidad.setCodigo(rst.getString(1));
+		objEntidad.setNombres(rst.getString(2));
+		objEntidad.setApellidos(rst.getString(3));
+		objEntidad.setFechaNac(dateFormat.format(rst.getDate(4)));
+		objEntidad.setSexo(rst.getString(5));
 
 	}
 
@@ -147,20 +111,10 @@ public Alumno obtenerAlumnoPK(String chrAlumCodigo) throws Exception {
 	
 }
 
-
-
-
-
-
-
-
-
-
-/*======================================= Datos Adicionales ==========================================================*/
-
-/*
 public void actualizar(Alumno entidad) throws Exception {
 	
+	
+		
 	String sql;
 	
 	sql="UPDATE Alumno set vchAluNombres='"+entidad.getNombres() + "',"
@@ -205,10 +159,55 @@ public void insertar(Alumno entidad) throws Exception {
 }
 
 
+public String GenerarCodAlum() throws Exception {
 
-======================================= Listar Alumnos por Producto ==========================================================
+	Date nuevo = new Date();
+	
+	DateFormat df = new SimpleDateFormat("yyMM");
+	
+	
+	int numCurs=1;
+	String gencodtcurs="";
 
-public Lista obtenerAlumnosPRO(String strCodigo) throws Exception {
+	String sql="";
+	
+	Connection conn=getConnection();
+	
+	Statement stm=conn.createStatement();
+	
+	sql="SELECT * FROM Alumno";
+	
+	ResultSet rst=stm.executeQuery(sql);
+
+	while(rst.next()){
+		
+		//contador para saber la cantidad de curso.
+		numCurs = numCurs + 1;
+		
+	}
+	
+	numCurs=330 + numCurs;
+	
+	gencodtcurs ="CA"+df.format(nuevo)+numCurs;
+	
+		
+	rst.close();
+	stm.close();
+	conn.close();
+	
+	return gencodtcurs;
+	
+}
+
+
+
+/*======================================= Listar Alumnos por Curso ==========================================================*/
+
+public Lista obtenerAlumnosCUR(String strCodigo) throws Exception {
+	
+	//Dar Formato a la fecha
+	dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	
 	
 	Alumno objEntidad=null;
 	Lista objLista=new Lista(); 
@@ -218,11 +217,11 @@ public Lista obtenerAlumnosPRO(String strCodigo) throws Exception {
 	
 	String sql="";
 		
-	sql=" select alu.chrAluCodigo, alu.vchAluNombres, alu.vchAluApellidos, alu.dtmAluFechaNac" +
+	sql=" select alu.chrAluCodigo, alu.vchAluNombres, alu.vchAluApellidos, alu.dtmAluFechaNac, alu.chrAluSexo "  +
 		" from Alumno as alu" +
 		" join Matricula as matri" +
 		" on alu.chrAluCodigo=matri.chrAluCodigo" +
-		" where matri.chrProCodigo = '"+strCodigo+"'";
+		" where matri.chrCursCodigo ='"+strCodigo+"'";
  
 	ResultSet rst=stm.executeQuery(sql);
 
@@ -233,7 +232,8 @@ public Lista obtenerAlumnosPRO(String strCodigo) throws Exception {
 		objEntidad.setCodigo(rst.getString(1));
 		objEntidad.setNombres(rst.getString(2));
 		objEntidad.setApellidos(rst.getString(3));
-		objEntidad.setFechaNac(rst.getString(4));
+		objEntidad.setFechaNac(dateFormat.format(rst.getDate(4)));
+		objEntidad.setSexo(rst.getString(5));
 		
 		objLista.setElemento(objEntidad);				
 	}
@@ -245,8 +245,43 @@ public Lista obtenerAlumnosPRO(String strCodigo) throws Exception {
 	return objLista;
 
 }
-*/
 
+
+public Alumno validarAlum(String strLogin, String strPassword)throws SQLException {
+
+
+	//Dar Formato a la fecha
+	dateFormat = new SimpleDateFormat("dd-MM-yyyy");	
+	
+	Alumno objAlumno=null;
+
+	String sql="";
+	
+	Connection conn=getConnection();
+	
+	Statement stm=conn.createStatement();
+	
+	sql="SELECT * FROM Alumno WHERE chrAluCodigo='"+strLogin+"' AND vchAluApellidos='"+strPassword+"'";
+	
+	ResultSet rst=stm.executeQuery(sql);
+
+	while(rst.next()){
+			
+		objAlumno=new Alumno();
+		
+		objAlumno.setCodigo(rst.getString(1));
+		objAlumno.setNombres(rst.getString(2));
+		objAlumno.setApellidos(rst.getString(3));
+		objAlumno.setFechaNac(dateFormat.format(rst.getDate(4)));
+		objAlumno.setSexo(rst.getString(5));
+	}
+
+	rst.close();
+	stm.close();
+	conn.close();
+		
+	return objAlumno;	
+}
 
 
 

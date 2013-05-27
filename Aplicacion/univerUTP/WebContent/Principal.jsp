@@ -6,19 +6,25 @@
 
 <%
 //Para verificar la sesion.
-if(session.getAttribute("strAlumCodigo")==null){
+if(session.getAttribute("strAdmCodigo")==null){
 	response.sendRedirect("Login.jsp");
 }
 
-String strAlumNom=String.valueOf(session.getAttribute("strAlumNombre"));
-String strAlumCod=String.valueOf(session.getAttribute("strAlumCodigo"));
-String strAlumFacu=String.valueOf(session.getAttribute("strAlumFacu"));
-
-strAlumCod = strAlumCod.replace(" ", "");
+String strAdministrador=String.valueOf(session.getAttribute("strAdmNombre"));
 %>
 
 <head>
-<title>Bienvenidoa la Intranet Alumnos</title>
+<title>Bienvenidoa la Intranet</title>
+<style type="text/css">
+#apDiv1 {
+	position: absolute;
+	left: 238px;
+	top: 25px;
+	width: 456px;
+	height: 50px;
+	z-index: 1;
+}
+</style>
 </head>
 
 <body>
@@ -39,23 +45,46 @@ strAlumCod = strAlumCod.replace(" ", "");
     
     </td>
     <td width="83%" height="544" valign="top"><p>&nbsp;</p>
-      <p><font face="Arial"><b>&nbsp;&nbsp;&nbsp;
-        Bienvenido : </b> <%=strAlumNom%></font></p>
-        
-      <img src="images/<%=strAlumCod%>.jpg" alt="Alumno Registrado">
-      <p>&nbsp;</p>  
-      
-        Codigo : </b> <%=strAlumCod%></font></p>
-        
-      <p>&nbsp;</p>    
-        Facultad : </b> <%=strAlumFacu%></font></p>
-        
       <p>&nbsp;</p>
+      <p><font face="Arial"><b>&nbsp;&nbsp;&nbsp;
+        Bienvenido :</b> <%=strAdministrador%></font></p>
+      <p>&nbsp; </p>
       <p>&nbsp;</p>
       <p>&nbsp;</p>
       <p>&nbsp;</p>
       <div align="center">
-
+        <center>
+      <table border="0" width="80%" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="100%" bgcolor=#f8a5a5>
+            <p align="center"><font size="4" face="Arial">
+                        <strong>Admistrador</strong></font></td>
+        </tr>
+                <tr>
+                  <td width="100%">
+                    <p align="center">&nbsp;
+                      
+                    </p>
+                    <p align="center">
+                      <font face="Arial">
+                        El sistema le permite dar mantenimiento
+                        <br/>
+                        a las diferentes tablas del sistema
+                      </font>
+                    </p>
+                    <p align="center">&nbsp;
+                      
+                    </p>
+                    <table border="0" width="100%" cellspacing="0"
+                           cellpadding="0">
+                      <tr>
+                        
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+      </table>
+        </center>
       </div>
     </td>
   </tr>
